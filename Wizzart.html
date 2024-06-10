@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wizard Movement</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+        }
+        #wizard {
+            position: absolute;
+            width: 64px; /* Adjust the size to fit your image */
+            height: 64px;
+            transition: top 10s ease, left 10s ease; /* Movement duration and rotation */
+        }
+    </style>
+</head>
+<body>
+   <img id="wizard" src="https://www.wizard.financial/static/media/wizaart-img.56787174.gif" alt="Pixel Wizard">
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var wizard = document.getElementById('wizard');
+            var wizardX = window.innerWidth / 2;
+            var wizardY = window.innerHeight / 2;
+
+            wizard.style.top = wizardY + 'px';
+            wizard.style.left = wizardX + 'px';
+            wizard.style.transform = 'translate(-50%, -50%)';
+        });
+
+        document.body.addEventListener('click', function(event) {
+            var wizard = document.getElementById('wizard');
+            var clickX = event.clientX;
+            var clickY = event.clientY;
+            var wizardRect = wizard.getBoundingClientRect();
+            var wizardX = wizardRect.left + wizardRect.width / 2;
+            var wizardY = wizardRect.top + wizardRect.height / 2;
+
+            // Calculate the angle to rotate the wizard
+            var angle = Math.atan2(clickY - wizardY, clickX - wizardX) * 180 / Math.PI;
+
+            // Update the wizard's rotation and position
+            wizard.style.transform = `translate(-50%, -50%) rotate(${angle + 180}deg)`; // Add 180 degrees to face the correct direction
+
+            // Start moving the wizard
+            wizard.style.left = clickX + 'px';
+            wizard.style.top = clickY + 'px';
+        });
+    </script>
+</body>
+</html>
